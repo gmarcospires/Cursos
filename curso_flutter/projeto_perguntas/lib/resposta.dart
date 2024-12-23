@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 
 class Resposta extends StatelessWidget {
   final String texto;
@@ -8,10 +7,11 @@ class Resposta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ShadButton(
-      width: double.infinity,
-      onPressed: () => _response(),
-      child: Text(texto),
-    );
+    return SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () => _response(),
+          child: Text(texto),
+        ));
   }
 }

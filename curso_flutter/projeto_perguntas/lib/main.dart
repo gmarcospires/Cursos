@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
-import './questao.dart';
-import './resposta.dart';
+import './resultado.dart';
+import './questionario.dart';
 
 main() {
   runApp(const PerguntaApp());
@@ -15,61 +14,75 @@ class ShadTheme {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
-  void _response(int index) {
+  var _pontuacaoTotal = 0;
+
+  final List<Map<String, Object>> perguntas = const [
+    {
+      'pergunta': 'Qual é a sua cor favorita?',
+      'respostas': [
+        {'texto': 'Preto', 'pontuacao': 10},
+        {'texto': 'Vermelho', 'pontuacao': 5},
+        {'texto': 'Verde', 'pontuacao': 3},
+        {'texto': 'Branco', 'pontuacao': 1},
+      ],
+    },
+    {
+      'pergunta': 'Qual é o seu animal favorito?',
+      'respostas': [
+        {'texto': 'Coelho', 'pontuacao': 10},
+        {'texto': 'Cobra', 'pontuacao': 5},
+        {'texto': 'Elefante', 'pontuacao': 3},
+        {'texto': 'Leão', 'pontuacao': 1},
+      ],
+    },
+    {
+      'pergunta': 'Qual é o seu instrutor favorito?',
+      'respostas': [
+        {'texto': 'Maria', 'pontuacao': 10},
+        {'texto': 'João', 'pontuacao': 5},
+        {'texto': 'Leo', 'pontuacao': 3},
+        {'texto': 'Pedro', 'pontuacao': 1},
+      ],
+    },
+  ];
+
+  void _response(int index, int pontuacao) {
     setState(() {
       _perguntaSelecionada++;
+      _pontuacaoTotal += pontuacao;
     });
     print('Resposta $index foi selecionada!');
-    print(_perguntaSelecionada);
+    print('Pontuação: $pontuacao');
+  }
+
+  bool get hasSelectedQuestion {
+    return _perguntaSelecionada < perguntas.length;
+  }
+
+  void _restart() {
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> perguntas = [
-      'Qual é a sua cor favorita?',
-      'Qual é o seu animal favorito?',
-    ];
-    return ShadApp(
-      darkTheme: ShadThemeData(
-        brightness: Brightness.dark,
-        colorScheme: const ShadSlateColorScheme.dark(
-          // background: Colors.blue,
-          primary: Color.fromARGB(255, 239, 60, 70),
-          secondary: Color.fromARGB(255, 0, 133, 255),
-        ),
-      ),
-      theme: ShadThemeData(
-          colorScheme: const ShadSlateColorScheme.light(
-            // background: Colors.blue,
-            primary: Color.fromARGB(255, 239, 60, 70),
-            secondary: Color.fromARGB(255, 0, 133, 255),
-          ),
-          brightness: Brightness.light),
+    return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Perguntas'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
-        body: Column(
-          children: <Widget>[
-            Questao(perguntas.elementAt(_perguntaSelecionada)),
-            Text(
-              perguntas.elementAt(_perguntaSelecionada),
-              style: ShadTheme.of(context).textTheme.bodyMedium,
-            ),
-            Resposta('Resposta 1', () => _response(1)),
-            Resposta('Resposta 2', () => _response(2)),
-            Resposta('Resposta 3', () => _response(3)),
-            ElevatedButton(
-              onPressed: null,
-              child: const Text('Resposta Desabilitada'),
-            ),
-            ShadButton(
-              onPressed: null,
-              child: const Text('Shad Button'),
-            )
-          ],
-        ),
+        body: hasSelectedQuestion
+            ? Questionario(
+                pergunta:
+                    perguntas[_perguntaSelecionada]['pergunta'].toString(),
+                respostas: perguntas[_perguntaSelecionada]['respostas']
+                    as List<Map<String, Object>>,
+                response: _response,
+              )
+            : Resultado(_pontuacaoTotal, _restart),
       ),
     );
   }
