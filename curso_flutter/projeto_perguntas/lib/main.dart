@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './resultado.dart';
 import './questionario.dart';
@@ -68,11 +69,30 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
+    // return CupertinoApp(
+    //   home: CupertinoPageScaffold(
+    //     navigationBar: CupertinoNavigationBar(
+    //       middle: const Text('Perguntas'),
+    //       backgroundColor: CupertinoTheme.of(context).barBackgroundColor,
+    //     ),
+    //     child: hasSelectedQuestion
+    //         ? Questionario(
+    //             pergunta:
+    //                 perguntas[_perguntaSelecionada]['pergunta'].toString(),
+    //             respostas: perguntas[_perguntaSelecionada]['respostas']
+    //                 as List<Map<String, Object>>,
+    //             response: _response,
+    //           )
+    //         : Resultado(_pontuacaoTotal, _restart),
+    //   ),
+    // );
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Perguntas'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          // centerTitle: true,
         ),
         body: hasSelectedQuestion
             ? Questionario(
