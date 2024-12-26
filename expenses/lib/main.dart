@@ -54,46 +54,46 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    Transaction(
-        date: DateTime.now(),
-        id: 't1',
-        title: 'Novo Tênis de Corrida',
-        value: 310.76),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 1)),
-        id: 't2',
-        title: 'Conta de Luz',
-        value: 211.30),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 2)),
-        id: 't3',
-        title: 'Conta de Água',
-        value: 100.30),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 2)),
-        id: 't4',
-        title: 'Conta de Telefone',
-        value: 100),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 2)),
-        id: 't5',
-        title: 'Cartão de Crédito',
-        value: 100),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 2)),
-        id: 't6',
-        title: 'Empréstimo',
-        value: 100),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 2)),
-        id: 't7',
-        title: 'Supermercado',
-        value: 100),
-    Transaction(
-        date: DateTime.now().subtract(Duration(days: 3)),
-        id: 't8',
-        title: 'Aluguel',
-        value: 100),
+    // Transaction(
+    //     date: DateTime.now(),
+    //     id: 't1',
+    //     title: 'Novo Tênis de Corrida',
+    //     value: 310.76),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 1)),
+    //     id: 't2',
+    //     title: 'Conta de Luz',
+    //     value: 211.30),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 2)),
+    //     id: 't3',
+    //     title: 'Conta de Água',
+    //     value: 100.30),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 2)),
+    //     id: 't4',
+    //     title: 'Conta de Telefone',
+    //     value: 100),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 2)),
+    //     id: 't5',
+    //     title: 'Cartão de Crédito',
+    //     value: 100),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 2)),
+    //     id: 't6',
+    //     title: 'Empréstimo',
+    //     value: 100),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 2)),
+    //     id: 't7',
+    //     title: 'Supermercado',
+    //     value: 100),
+    // Transaction(
+    //     date: DateTime.now().subtract(Duration(days: 3)),
+    //     id: 't8',
+    //     title: 'Aluguel',
+    //     value: 100),
   ];
 
   List<Transaction> get _recentTransactions {
