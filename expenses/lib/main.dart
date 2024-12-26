@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:expenses/components/transaction_list.dart';
 import 'package:expenses/models/transaction.dart';
@@ -53,38 +54,75 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _transactions = [
-    // Transaction(
-    //     date: DateTime.now(),
-    //     id: 't1',
-    //     title: 'Novo Tênis de Corrida',
-    //     value: 310.76),
-    // Transaction(
-    //     date: DateTime.now(), id: 't2', title: 'Conta de Luz', value: 211.30),
-    // Transaction(
-    //     date: DateTime.now(), id: 't3', title: 'Conta de Água', value: 100.30),
-    // Transaction(
-    //     date: DateTime.now(), id: 't4', title: 'Conta de Telefone', value: 100),
-    // Transaction(
-    //     date: DateTime.now(), id: 't5', title: 'Cartão de Crédito', value: 100),
-    // Transaction(
-    //     date: DateTime.now(), id: 't6', title: 'Empréstimo', value: 100),
-    // Transaction(
-    //     date: DateTime.now(), id: 't7', title: 'Supermercado', value: 100),
-    // Transaction(date: DateTime.now(), id: 't8', title: 'Aluguel', value: 100),
+    Transaction(
+        date: DateTime.now(),
+        id: 't1',
+        title: 'Novo Tênis de Corrida',
+        value: 310.76),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 1)),
+        id: 't2',
+        title: 'Conta de Luz',
+        value: 211.30),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 2)),
+        id: 't3',
+        title: 'Conta de Água',
+        value: 100.30),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 2)),
+        id: 't4',
+        title: 'Conta de Telefone',
+        value: 100),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 2)),
+        id: 't5',
+        title: 'Cartão de Crédito',
+        value: 100),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 2)),
+        id: 't6',
+        title: 'Empréstimo',
+        value: 100),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 2)),
+        id: 't7',
+        title: 'Supermercado',
+        value: 100),
+    Transaction(
+        date: DateTime.now().subtract(Duration(days: 3)),
+        id: 't8',
+        title: 'Aluguel',
+        value: 100),
   ];
 
-  void _addtransaction(String title, double value) {
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(
+        Duration(days: 7),
+      ));
+    }).toList();
+  }
+
+  void _addtransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
-        id: Random().nextDouble().toString(),
-        title: title,
-        value: value,
-        date: DateTime.now());
+      id: Random().nextDouble().toString(),
+      title: title,
+      value: value,
+      date: date,
+    );
 
     setState(() {
       _transactions.add(newTransaction);
     });
 
     Navigator.of(context).pop(); // Fecha o modal
+  }
+
+  void _removeTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == id);
+    });
   }
 
   void _openTransactionFormModal(BuildContext context) {
@@ -115,16 +153,13 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             SizedBox(
               width: double.infinity,
-              child: Card(
-                elevation: 5,
-                child: Text('Gráfico'),
-              ),
+              child: Chart(_recentTransactions),
             ),
             const Divider(
               indent: 20,
               endIndent: 20,
             ),
-            TransactionList(_transactions)
+            TransactionList(_transactions, _removeTransaction)
           ],
         ),
       ),
