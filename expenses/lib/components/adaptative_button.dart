@@ -33,7 +33,7 @@ class AdaptativeButton extends StatelessWidget {
                     onPressed: onPressed,
                     child: Text(
                       label,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   )
                 : ElevatedButton(

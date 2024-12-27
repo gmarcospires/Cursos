@@ -31,7 +31,7 @@ class ChartBar extends StatelessWidget {
             ),
             // SizedBox(height: 5),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+              margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
               height: constraints.maxHeight * 0.6,
               width: 10,
               child: Stack(

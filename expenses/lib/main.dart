@@ -246,7 +246,7 @@ class _MyHomePageState extends State<MyHomePage> {
             floatingActionButton: FloatingActionButton(
               onPressed: () => _openTransactionFormModal(context),
               elevation: 10,
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
             floatingActionButtonLocation: Platform.isIOS
                 ? null

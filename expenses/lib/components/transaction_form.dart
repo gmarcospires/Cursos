@@ -38,7 +38,7 @@ class _TransactionFormState extends State<TransactionForm> {
         // elevation: 5,
         child: Column(
           children: [
-            Text('Adicionar nova transação',
+            const Text('Adicionar nova transação',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             const Divider(),
             AdaptativeTextfield(
@@ -48,7 +48,8 @@ class _TransactionFormState extends State<TransactionForm> {
               label: 'Título',
             ),
             AdaptativeTextfield(
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
               controller: _valueController,
               onSubmitted: (_) => _submitForm(),
               inputFormatters: <TextInputFormatter>[
@@ -66,7 +67,7 @@ class _TransactionFormState extends State<TransactionForm> {
               },
             ),
             Container(
-              margin: EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 10),
               child: AdaptativeButton(
                 label: 'Nova transação',
                 onPressed: _submitForm,
