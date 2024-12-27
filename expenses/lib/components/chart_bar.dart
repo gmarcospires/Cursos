@@ -1,3 +1,4 @@
+import 'package:expenses/utils/numeric_utils.dart';
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
@@ -14,47 +15,55 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SizedBox(
-          height: 20,
-          child: FittedBox(
-            child: Text(
-                'R\$ ${value.toStringAsFixed(2).replaceAll(',', '').replaceAll('.', ',')}'),
-          ),
-        ),
-        // SizedBox(height: 5),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-          height: 60,
-          width: 10,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  color: Color.fromRGBO(220, 220, 220, 1),
-                  borderRadius: BorderRadius.circular(5),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              height: constraints.maxHeight * 0.10,
+              child: FittedBox(
+                child: Text(
+                  NumericUtils.fortmatCurrency(value),
                 ),
               ),
-              FractionallySizedBox(
-                heightFactor: percentage,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
-                    borderRadius: BorderRadius.circular(5),
+            ),
+            // SizedBox(height: 5),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+              height: constraints.maxHeight * 0.6,
+              width: 10,
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      color: Color.fromRGBO(220, 220, 220, 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
-        // SizedBox(height: 5),
-        Text(label),
-      ],
+                  FractionallySizedBox(
+                    heightFactor: percentage,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            // SizedBox(height: 5),
+            SizedBox(
+              height: constraints.maxHeight * 0.15,
+              child: Text(label),
+            ),
+          ],
+        );
+      },
     );
   }
 }
