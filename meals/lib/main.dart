@@ -5,6 +5,8 @@ import 'package:meals/screens/categories_screen.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:meals/screens/categories_meals_screen.dart';
+import 'package:meals/screens/meal_detail_screen.dart';
+import 'package:meals/screens/tabs_screen.dart';
 import 'package:meals/utils/app_routes.dart';
 
 void main() async {
@@ -73,11 +75,18 @@ class MyApp extends StatelessWidget {
           iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
-      home: const CategoriesScreen(),
+      home: const TabsScreen(),
       // initialRoute: '/',
       routes: {
         AppRoutes.categoriesMeals: (ctx) => const CategoriesMealsScreen(),
+        AppRoutes.mealDetail: (ctx) => const MealDetailScreen(),
       },
+      // onGenerateRoute: (settings) {
+
+      // },
+      // onUnknownRoute: (settings) {
+
+      // },
     );
   }
 }
