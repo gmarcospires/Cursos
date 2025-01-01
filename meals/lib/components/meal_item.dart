@@ -11,6 +11,9 @@ class MealItem extends StatelessWidget {
       AppRoutes.mealDetail,
       arguments: meal,
     );
+    // .then((value) => {
+    //       if (value == null) {print('Sem resultado')} else {print(value)}
+    //     });
   }
 
   @override
