@@ -1,75 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/models/cart.dart';
 import 'package:shop/models/product.dart';
+import 'package:shop/models/product_list.dart';
 import 'package:shop/utils/app_routes.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({
-    super.key,
-  });
+  final Product product;
+
+  const ProductItem(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(
-      context,
-      listen: false,
-    );
-
-    final cart = Provider.of<Cart>(
-      context,
-      listen: false,
-    );
-
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
-      height: MediaQuery.of(context).size.height * 0.5,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: GridTile(
-          footer: GridTileBar(
-            leading: Consumer<Product>(
-              builder: (ctx, product, _) => IconButton(
-                onPressed: () {
-                  product.toggleFavoriteStatus();
-                },
-                icon: Icon(product.isFavorite
-                    ? Icons.favorite
-                    : Icons.favorite_border),
-                color: Theme.of(context).colorScheme.secondary,
-              ),
-            ),
-            title: Text(
-              product.name,
-              textAlign: TextAlign.center,
-            ),
-            trailing: IconButton(
+    return ListTile(
+      title: Text(product.name),
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(product.imageUrl),
+      ),
+      trailing: SizedBox(
+        width: 100,
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.edit),
               onPressed: () {
-                cart.addItem(product);
+                Navigator.of(context)
+                    .pushNamed(AppRoutes.productForm, arguments: product);
               },
-              icon: Icon(Icons.shopping_cart),
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            backgroundColor: Colors.black87,
-            // backgroundColor: Color.from(
-            //   alpha: 0.75,
-            //   red: Theme.of(context).colorScheme.primary.r,
-            //   green: Theme.of(context).colorScheme.primary.g,
-            //   blue: Theme.of(context).colorScheme.primary.b,
-            // ),
-          ),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                AppRoutes.productDetail,
-                arguments: product,
-              );
-            },
-            child: Image.network(
-              product.imageUrl,
-              fit: BoxFit.cover,
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: const Text('Excluir?'),
+                    content: Text('Quer remover ${product.name}?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop(false);
+                        },
+                        child: const Text(
+                          'Não',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      FilledButton(
+                        onPressed: () {
+                          // Provider.of<ProductList>(context, listen: false)
+                          //     .deleteProduct(product.id);
+                          Navigator.of(ctx).pop(true);
+                        },
+                        child: const Text('Sim'),
+                      ),
+                    ],
+                  ),
+                ).then((value) {
+                  if (value ?? false) {
+                    Provider.of<ProductList>(context, listen: false)
+                        .deleteProduct(product.id);
+                  }
+                });
+              },
+              color: Theme.of(context).colorScheme.error,
             ),
-          ),
+          ],
         ),
       ),
     );
