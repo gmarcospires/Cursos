@@ -3,7 +3,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:routefly/routefly.dart';
 
-import 'ui/auth/login_page.dart' as a0;
+import 'ui/auth/login/login_page.dart' as a0;
 import 'ui/home/home_page.dart' as a1;
 
 Route b0Builder(BuildContext ctx, RouteSettings settings) =>

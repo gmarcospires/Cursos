@@ -14,14 +14,15 @@ class AuthClientHttp {
 
     // return response.map((json) => LoggedUser.fromJson(json.data));
 
-    await Future.delayed(const Duration(seconds: 4));
+    await Future.delayed(const Duration(seconds: 2));
     return Success(
       LoggedUser(
-          email: 'teste@teste',
+          email: 'teste@teste.com',
           id: 1,
           name: 'Teste',
           refreshToken: 'sajbsa',
           token: 'asjbsa'),
     );
+    // return Failure(Exception('Erro ao fazer login'));
   }
 }

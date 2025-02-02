@@ -6,7 +6,9 @@ import 'package:flutter_teste/data/service/auth/auth_client_http.dart';
 import 'package:flutter_teste/data/service/auth/auth_local_storage.dart';
 import 'package:flutter_teste/data/service/client_http.dart';
 import 'package:flutter_teste/data/service/local_storage.dart';
-import 'package:flutter_teste/ui/auth/viewmodels/login_viewmodel.dart';
+import 'package:flutter_teste/main_viewModel.dart';
+import 'package:flutter_teste/ui/auth/login/viewmodels/login_viewmodel.dart';
+import 'package:flutter_teste/ui/auth/logout/viewmodels/logout_viewmodel.dart';
 
 final injector = AutoInjector();
 
@@ -18,5 +20,8 @@ setupDependencies() {
   injector.addSingleton(LocalStorage.new);
   injector.addSingleton(AuthClientHttp.new);
   injector.addSingleton(AuthLocalStorage.new);
+
   injector.addSingleton(LoginViewmodel.new);
+  injector.addSingleton(LogoutViewmodel.new);
+  injector.addSingleton(MainViewModel.new);
 }

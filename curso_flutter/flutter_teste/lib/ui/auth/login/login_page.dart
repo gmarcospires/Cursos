@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_teste/config/dependencies.dart';
 import 'package:flutter_teste/domain/dtos/credentials.dart';
 import 'package:flutter_teste/domain/validators/credentials_validator.dart';
-import 'package:flutter_teste/main.dart';
-import 'package:flutter_teste/ui/auth/viewmodels/login_viewmodel.dart';
+import 'package:flutter_teste/ui/auth/login/viewmodels/login_viewmodel.dart';
 import 'package:result_command/result_command.dart';
-import 'package:routefly/routefly.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,13 +18,16 @@ class _LoginPageState extends State<LoginPage> {
   final credentials = Credentials();
 
   void _listenable() {
-    if (viewModel.loginCommand.isSuccess) {
-      Routefly.replace(routePaths.home);
-    } else if (viewModel.loginCommand.isFailure) {
+    // if (viewModel.loginCommand.isSuccess) {
+    //   // Routefly.replace(routePaths.home);
+    //   Routefly.push(routePaths.home);
+    // } else
+    if (viewModel.loginCommand.isFailure) {
       final error = viewModel.loginCommand.value as FailureCommand;
 
       final snackBar = SnackBar(
         content: Text(error.error.toString()),
+        backgroundColor: Colors.red,
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -64,6 +65,8 @@ class _LoginPageState extends State<LoginPage> {
                   onChanged: credentials.setEmail,
                   validator: validator.byField(credentials, 'email'),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.emailAddress,
+                  // keyboardAppearance: KeyboardA,
                 ),
                 SizedBox(height: 20),
                 TextFormField(
@@ -73,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   obscureText: true,
                   onChanged: credentials.setPassword,
-                  keyboardType: TextInputType.visiblePassword,
+                  // keyboardType: TextInputType.visiblePassword,
                   validator: validator.byField(credentials, 'password'),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),
@@ -87,10 +90,22 @@ class _LoginPageState extends State<LoginPage> {
                             : () {
                                 if (validator.validate(credentials).isValid) {
                                   viewModel.loginCommand.execute(credentials);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Invalid credentials'),
+                                    ),
+                                  );
                                 }
                               },
                         child: viewModel.loginCommand.isRunning
-                            ? CircularProgressIndicator()
+                            ? SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
                             : Text('Login'),
                       );
                     }),
